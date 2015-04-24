@@ -1,0 +1,2 @@
+# Scarcity
+Be resourceful
