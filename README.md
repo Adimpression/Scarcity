@@ -9,14 +9,3 @@ Remembere that time when you needed to do something important but you felt helpl
 
 Let's find one. Let's see what resources you've got!
 
-(Names below are just initials since some memebers prefer to be annonymous)
-
-## 21st June, 2015
-
-Spoke to JL about "What Next", a group to help teenages (mainly) figure out what to do next in life. 
-
-JL is on board to help us out.
-
-Created FB Group:
-
-https://www.facebook.com/groups/1465137647132485/
