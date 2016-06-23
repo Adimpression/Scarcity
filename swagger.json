@@ -26,7 +26,7 @@
           "name" : "nickname",
           "in" : "query",
           "description" : "If two people have the same name, how do you differentiate this person?",
-          "required" : true,
+          "required" : false,
           "type" : "string"
         } ],
         "responses" : {
