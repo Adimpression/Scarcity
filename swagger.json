@@ -67,11 +67,24 @@
       "properties" : {
         "name" : {
           "type" : "string",
-          "description" : "Unique identifier representing a specific person for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles."
+          "description" : "The persons full name"
         },
         "nickname" : {
           "type" : "string",
-          "description" : "Description of person."
+          "description" : "If there are many persons under the same full name, how do you differentiate?"
+        }
+      }
+    },
+    "Note" : {
+      "type" : "object",
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "description" : "Uninque Identifier for this note"
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "Any text entry"
         }
       }
     }
