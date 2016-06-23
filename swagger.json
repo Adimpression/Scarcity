@@ -6,7 +6,7 @@
     "title" : "Scarcity"
   },
   "host" : "7e250f1wtd.execute-api.us-east-1.amazonaws.com",
-  "basePath" : "/development",
+  "basePath" : "/v1",
   "schemes" : [ "https" ],
   "produces" : [ "application/json" ],
   "paths" : {
