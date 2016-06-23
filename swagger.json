@@ -1,0 +1,79 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Scarcity Project Services",
+    "version" : "1.0.1",
+    "title" : "Scarcity"
+  },
+  "host" : "7e250f1wtd.execute-api.us-east-1.amazonaws.com",
+  "basePath" : "/development",
+  "schemes" : [ "https" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/persons" : {
+      "get" : {
+        "tags" : [ "Persons" ],
+        "summary" : "Persons Summary",
+        "description" : "Persons Description\n",
+        "operationId" : "personsGET",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "description" : "Full name of the person. Case in-sensitive. ",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nickname",
+          "in" : "query",
+          "description" : "If two people have the same name, how do you differentiate this person?",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An array of matching persons",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Person"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "GET",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:personsGET/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws",
+          "parameters" : {
+            "name" : "$input.params('name')",
+            "nickname" : "$input.params('nickname')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"name\" : \"$input.params('name')\",\n  \"nickname\" : \"$input.params('nickname')\"\n}"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Person" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Unique identifier representing a specific person for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles."
+        },
+        "nickname" : {
+          "type" : "string",
+          "description" : "Description of person."
+        }
+      }
+    }
+  }
+}
