@@ -33,19 +33,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "GET",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:notesGET/invocations",
-          "responses" : {
-            "default" : {
-              "statusCode" : "200"
-            }
-          },
-          "type" : "aws",
-          "parameters" : {
-            "name" : "$input.params('name')"
-          },
-          "requestTemplates" : {
-            "application/json" : "{\n  \"name\" : \"$input.params('name')\"\n}"
-          }
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:notesGET/invocations"
         }
       },
       "post" : {
@@ -71,19 +59,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "GET",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:notesPOST/invocations",
-          "responses" : {
-            "default" : {
-              "statusCode" : "200"
-            }
-          },
-          "type" : "aws",
-          "parameters" : {
-            "body" : "$input.body"
-          },
-          "requestTemplates" : {
-            "application/json" : "{\n  \"body\" : \"$input.body\"\n}"
-          }
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:notesPOST/invocations"
         }
       }
     },
@@ -114,19 +90,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "GET",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:personsGET/invocations",
-          "responses" : {
-            "default" : {
-              "statusCode" : "200"
-            }
-          },
-          "type" : "aws",
-          "parameters" : {
-            "name" : "$input.params('name')"
-          },
-          "requestTemplates" : {
-            "application/json" : "{\n  \"name\" : \"$input.params('name')\"\n}"
-          }
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:personsGET/invocations"
         }
       },
       "post" : {
@@ -152,19 +116,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "GET",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:personsPOST/invocations",
-          "responses" : {
-            "default" : {
-              "statusCode" : "200"
-            }
-          },
-          "type" : "aws",
-          "parameters" : {
-            "name" : "$input.params('name')"
-          },
-          "requestTemplates" : {
-            "application/json" : "{\n  \"name\" : \"$input.params('name')\"\n}"
-          }
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:personsPOST/invocations"
         }
       }
     }
