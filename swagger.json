@@ -5,7 +5,7 @@
     "version" : "1.0.1",
     "title" : "Scarcity"
   },
-  "host" : "7e250f1wtd.execute-api.us-east-1.amazonaws.com",
+  "host" : "bkwsf9jwi1.execute-api.us-east-1.amazonaws.com",
   "basePath" : "/v1",
   "schemes" : [ "https" ],
   "produces" : [ "application/json" ],
