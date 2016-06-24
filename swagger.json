@@ -12,20 +12,15 @@
   "paths" : {
     "/notes" : {
       "get" : {
-        "tags" : [ "Notes" ],
-        "summary" : "GET a list of notes",
-        "description" : "GET a list of notes by name",
         "operationId" : "notesGET",
         "parameters" : [ {
           "name" : "name",
           "in" : "query",
-          "description" : "Name of the note. Case in-sensitive.",
           "required" : true,
           "type" : "string"
         } ],
         "responses" : {
           "200" : {
-            "description" : "An array of matching notes",
             "schema" : {
               "type" : "array",
               "items" : {
@@ -49,6 +44,37 @@
           },
           "requestTemplates" : {
             "application/json" : "{\n  \"name\" : \"$input.params('name')\"\n}"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Notes" ],
+        "operationId" : "notesPOST",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "name",
+          "required" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "GET",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:notesPOST/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws",
+          "parameters" : {
+            "body" : "$input.body"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"body\" : \"$input.body\"\n}"
           }
         }
       }
