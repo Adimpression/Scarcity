@@ -91,12 +91,12 @@
       "get" : {
         "tags" : [ "Persons" ],
         "summary" : "GET a list of persons",
-        "description" : "GET a list of persons by name and nickname",
+        "description" : "GET a list of persons by name",
         "operationId" : "personsGET",
         "parameters" : [ {
           "name" : "name",
           "in" : "query",
-          "description" : "Full name of the person. Case ssensitive. If two people have the same name include a nickname in this field itself.",
+          "description" : "Full name of the person. Case ssensitive.",
           "required" : true,
           "type" : "string"
         } ],
@@ -177,7 +177,7 @@
       "properties" : {
         "name" : {
           "type" : "string",
-          "description" : "Full name of the person. Case ssensitive. If two people have the same name include a nickname in this field itself."
+          "description" : "Full name of the person. Case ssensitive."
         }
       }
     },
