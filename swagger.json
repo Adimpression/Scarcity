@@ -96,14 +96,8 @@
         "parameters" : [ {
           "name" : "name",
           "in" : "query",
-          "description" : "Full name of the person. Case in-sensitive.",
+          "description" : "Full name of the person. Case ssensitive. If two people have the same name include a nickname in this field itself.",
           "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "nickname",
-          "in" : "query",
-          "description" : "If two people have the same name, how do you differentiate this person?",
-          "required" : false,
           "type" : "string"
         } ],
         "responses" : {
@@ -189,11 +183,7 @@
       "properties" : {
         "name" : {
           "type" : "string",
-          "description" : "Full name of the person. Case in-sensitive."
-        },
-        "nickname" : {
-          "type" : "string",
-          "description" : "If two people have the same name, how do you differentiate this person?"
+          "description" : "Full name of the person. Case ssensitive. If two people have the same name include a nickname in this field itself."
         }
       }
     },
