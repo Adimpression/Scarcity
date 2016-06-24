@@ -25,7 +25,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Person"
+                "$ref" : "#/definitions/Note"
               }
             }
           }
@@ -179,6 +179,34 @@
           "requestTemplates" : {
             "application/json" : "{\n  \"name\" : \"$input.params('name')\",\n  \"nickname\" : \"$input.params('nickname')\"\n}"
           }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Person" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Full name of the person. Case in-sensitive."
+        },
+        "nickname" : {
+          "type" : "string",
+          "description" : "If two people have the same name, how do you differentiate this person?"
+        }
+      }
+    },
+    "Note" : {
+      "type" : "object",
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "description" : "Uninque Identifier for this note"
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "Any text entry"
         }
       }
     }
