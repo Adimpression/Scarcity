@@ -46,13 +46,19 @@
         "tags" : [ "Notes" ],
         "operationId" : "notesPOST",
         "parameters" : [ {
-          "in" : "body",
           "name" : "name",
+          "in" : "body",
           "required" : false
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK"
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Note"
+              }
+            }
           }
         },
         "x-amazon-apigateway-integration" : {
