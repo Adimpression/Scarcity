@@ -161,11 +161,10 @@
           },
           "type" : "aws",
           "parameters" : {
-            "name" : "$input.params('name')",
-            "nickname" : "$input.params('nickname')"
+            "name" : "$input.params('name')"
           },
           "requestTemplates" : {
-            "application/json" : "{\n  \"name\" : \"$input.params('name')\",\n  \"nickname\" : \"$input.params('nickname')\"\n}"
+            "application/json" : "{\n  \"name\" : \"$input.params('name')\"\n}"
           }
         }
       }
