@@ -21,7 +21,13 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK"
+            "description" : "An array of matching persons",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Person"
+              }
+            }
           }
         },
         "x-amazon-apigateway-integration" : {
@@ -47,8 +53,9 @@
         "operationId" : "notesPOST",
         "parameters" : [ {
           "name" : "name",
-          "in" : "body",
-          "required" : false
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
