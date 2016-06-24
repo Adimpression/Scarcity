@@ -135,33 +135,50 @@
             "application/json" : "{\n  \"name\" : \"$input.params('name')\",\n  \"nickname\" : \"$input.params('nickname')\"\n}"
           }
         }
-      }
-    }
-  },
-  "definitions" : {
-    "Person" : {
-      "type" : "object",
-      "properties" : {
-        "name" : {
-          "type" : "string",
-          "description" : "Full name of the person. Case in-sensitive."
+      },
+      "post" : {
+        "tags" : [ "Persons" ],
+        "operationId" : "personsPOST",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "nickname",
+          "in" : "query",
+          "description" : "If two people have the same name, how do you differentiate this person?",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Person"
+              }
+            }
+          }
         },
-        "nickname" : {
-          "type" : "string",
-          "description" : "If two people have the same name, how do you differentiate this person?"
-        }
-      }
-    },
-    "Note" : {
-      "type" : "object",
-      "properties" : {
-        "key" : {
-          "type" : "string",
-          "description" : "Uninque Identifier for this note"
-        },
-        "value" : {
-          "type" : "string",
-          "description" : "Any text entry"
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "GET",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:personsPOST/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws",
+          "parameters" : {
+            "name" : "$input.params('name')",
+            "nickname" : "$input.params('nickname')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"name\" : \"$input.params('name')\",\n  \"nickname\" : \"$input.params('nickname')\"\n}"
+          }
         }
       }
     }
