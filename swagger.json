@@ -13,13 +13,13 @@
     "/persons" : {
       "get" : {
         "tags" : [ "Persons" ],
-        "summary" : "Persons Summary",
-        "description" : "Persons Description\n",
+        "summary" : "GET a list of persons",
+        "description" : "GET a list of persons by name and nickname",
         "operationId" : "personsGET",
         "parameters" : [ {
           "name" : "name",
           "in" : "query",
-          "description" : "Full name of the person. Case in-sensitive. ",
+          "description" : "Full name of the person. Case in-sensitive.",
           "required" : true,
           "type" : "string"
         }, {
@@ -67,11 +67,11 @@
       "properties" : {
         "name" : {
           "type" : "string",
-          "description" : "The persons full name"
+          "description" : "Full name of the person. Case in-sensitive."
         },
         "nickname" : {
           "type" : "string",
-          "description" : "If there are many persons under the same full name, how do you differentiate?"
+          "description" : "If two people have the same name, how do you differentiate this person?"
         }
       }
     },
