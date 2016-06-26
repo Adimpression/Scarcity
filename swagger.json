@@ -1,196 +1,51 @@
-{
-  "swagger" : "2.0",
-  "info" : {
-    "description" : "Scarcity Project Services",
-    "version" : "1.0.1",
-    "title" : "Scarcity"
-  },
-  "host" : "bkwsf9jwi1.execute-api.us-east-1.amazonaws.com",
-  "basePath" : "/development",
-  "schemes" : [ "https" ],
-  "produces" : [ "application/json" ],
-  "paths" : {
-    "/notes" : {
-      "get" : {
-        "operationId" : "notesGET",
-        "parameters" : [ {
-          "name" : "name",
-          "in" : "query",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "An array of matching persons",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Note"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration" : {
-          "passthroughBehavior" : "when_no_match",
-          "httpMethod" : "GET",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:notesGET/invocations",
-          "responses" : {
-            "default" : {
-              "statusCode" : "200"
-            }
-          },
-          "type" : "aws",
-          "parameters" : {
-            "name" : "$input.params('name')"
-          },
-          "requestTemplates" : {
-            "application/json" : "{\n  \"name\" : \"$input.params('name')\"\n}"
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "Notes" ],
-        "operationId" : "notesPOST",
-        "parameters" : [ {
-          "name" : "name",
-          "in" : "query",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Note"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration" : {
-          "passthroughBehavior" : "when_no_match",
-          "httpMethod" : "GET",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:notesPOST/invocations",
-          "responses" : {
-            "default" : {
-              "statusCode" : "200"
-            }
-          },
-          "type" : "aws",
-          "parameters" : {
-            "body" : "$input.body"
-          },
-          "requestTemplates" : {
-            "application/json" : "{\n  \"body\" : \"$input.body\"\n}"
-          }
-        }
-      }
-    },
-    "/persons" : {
-      "get" : {
-        "tags" : [ "Persons" ],
-        "summary" : "GET a list of persons",
-        "description" : "GET a list of persons by name",
-        "operationId" : "personsGET",
-        "parameters" : [ {
-          "name" : "name",
-          "in" : "query",
-          "description" : "Full name of the person. Case ssensitive.",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "An array of matching persons",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Person"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration" : {
-          "passthroughBehavior" : "when_no_match",
-          "httpMethod" : "GET",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:personsGET/invocations",
-          "responses" : {
-            "default" : {
-              "statusCode" : "200"
-            }
-          },
-          "type" : "aws",
-          "parameters" : {
-            "name" : "$input.params('name')"
-          },
-          "requestTemplates" : {
-            "application/json" : "{\n  \"name\" : \"$input.params('name')\"\n}"
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "Persons" ],
-        "operationId" : "personsPOST",
-        "parameters" : [ {
-          "name" : "name",
-          "in" : "query",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Person"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration" : {
-          "passthroughBehavior" : "when_no_match",
-          "httpMethod" : "GET",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:personsPOST/invocations",
-          "responses" : {
-            "default" : {
-              "statusCode" : "200"
-            }
-          },
-          "type" : "aws",
-          "parameters" : {
-            "name" : "$input.params('name')"
-          },
-          "requestTemplates" : {
-            "application/json" : "{\n  \"name\" : \"$input.params('name')\"\n}"
-          }
-        }
-      }
-    }
-  },
-  "definitions" : {
-    "Person" : {
-      "type" : "object",
-      "properties" : {
-        "name" : {
-          "type" : "string",
-          "description" : "Full name of the person. Case ssensitive."
-        }
-      }
-    },
-    "Note" : {
-      "type" : "object",
-      "properties" : {
-        "key" : {
-          "type" : "string",
-          "description" : "Uninque Identifier for this note"
-        },
-        "value" : {
-          "type" : "string",
-          "description" : "Any text entry"
-        }
-      }
-    }
-  }
-}
+---
+swagger: "2.0"
+info:
+  description: "Scarcity Project Services"
+  version: "1.1.0"
+  title: "Scarcity"
+host: "bkwsf9jwi1.execute-api.us-east-1.amazonaws.com"
+basePath: "/development"
+schemes:
+- "https"
+produces:
+- "application/json"
+paths:
+  /notes:
+    post:
+      operationId: "notesPOST"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Note"
+      responses:
+        200:
+          description: "ok"
+          schema:
+            $ref: "#/definitions/Empty"
+      x-amazon-apigateway-integration:
+        passthroughBehavior: "when_no_match"
+        httpMethod: "GET"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:notesPOST/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        type: "aws"
+        parameters:
+          body: "$input.body"
+        requestTemplates:
+          application/json: "{\n  \"body\" : \"$input.body\"\n}"
+definitions:
+  Note:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Uninque Identifier for this note"
+      value:
+        type: "string"
+        description: "Any text entry"
+  Empty:
+    type: "object"
