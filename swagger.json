@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  description: "Scarcity Project Services"
+  description: "Scarcity Project Services "
   version: "1.1.0"
   title: "Scarcity"
 host: "bkwsf9jwi1.execute-api.us-east-1.amazonaws.com"
@@ -15,11 +15,14 @@ paths:
     post:
       operationId: "notesPOST"
       parameters:
-      - in: "body"
-        name: "body"
+      - name: "name"
+        in: "query"
         required: true
-        schema:
-          $ref: "#/definitions/Note"
+        type: "string"
+      - name: "value"
+        in: "query"
+        required: true
+        type: "string"
       responses:
         200:
           description: "ok"
@@ -34,18 +37,11 @@ paths:
             statusCode: "200"
         type: "aws"
         parameters:
-          body: "$input.body"
+          name: "$input.params('name')"
+          value: "$input.params('value')"
         requestTemplates:
-          application/json: "{\n  \"body\" : \"$input.body\"\n}"
+          application/json: "{\n  \"name\" : \"$input.params('name')\",\n  \"value\"\
+            \ : \"$input.params('value')\"\n}"
 definitions:
-  Note:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-        description: "Uninque Identifier for this note"
-      value:
-        type: "string"
-        description: "Any text entry"
   Empty:
     type: "object"
