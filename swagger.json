@@ -83,6 +83,9 @@
           "requestTemplates" : {
             "application/json" : "{\n  \"name\" : \"$input.params('name')\",\n  \"value\" : \"$input.params('value')\"\n}"
           }
+        },
+        "x-amazon-apigateway-auth" : {
+          "type" : "aws_iam"
         }
       }
     }
