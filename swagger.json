@@ -1,47 +1,108 @@
----
-swagger: "2.0"
-info:
-  description: "Scarcity Project Services "
-  version: "1.1.0"
-  title: "Scarcity"
-host: "bkwsf9jwi1.execute-api.us-east-1.amazonaws.com"
-basePath: "/development"
-schemes:
-- "https"
-produces:
-- "application/json"
-paths:
-  /notes:
-    post:
-      operationId: "notesPOST"
-      parameters:
-      - name: "name"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "value"
-        in: "query"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "ok"
-          schema:
-            $ref: "#/definitions/Empty"
-      x-amazon-apigateway-integration:
-        passthroughBehavior: "when_no_match"
-        httpMethod: "GET"
-        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:notesPOST/invocations"
-        responses:
-          default:
-            statusCode: "200"
-        type: "aws"
-        parameters:
-          name: "$input.params('name')"
-          value: "$input.params('value')"
-        requestTemplates:
-          application/json: "{\n  \"name\" : \"$input.params('name')\",\n  \"value\"\
-            \ : \"$input.params('value')\"\n}"
-definitions:
-  Empty:
-    type: "object"
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Scarcity Project Services ",
+    "version" : "1.2.0",
+    "title" : "Scarcity"
+  },
+  "host" : "bkwsf9jwi1.execute-api.us-east-1.amazonaws.com",
+  "basePath" : "/development",
+  "schemes" : [ "https" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/notes" : {
+      "get" : {
+        "operationId" : "notesGET",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/Note"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "GET",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:notesGET/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws",
+          "parameters" : {
+            "name" : "$input.params('name')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"name\" : \"$input.params('name')\"\n}"
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "notesPOST",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "value",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "schema" : {
+              "$ref" : "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "GET",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:990005713460:function:notesPOST/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws",
+          "parameters" : {
+            "name" : "$input.params('name')",
+            "value" : "$input.params('value')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"name\" : \"$input.params('name')\",\n  \"value\" : \"$input.params('value')\"\n}"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Note" : {
+      "type" : "object",
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "description" : "Name for this note, unique"
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "Any text entry"
+        }
+      }
+    },
+    "Empty" : {
+      "type" : "object"
+    }
+  }
+}
