@@ -1,0 +1,55 @@
+**Problem**: "I have knowledge, logic and functions scattered all over the place..."
+
+**Solution**: "Use a common notation to represent knowledge and logic. Use this notation to implement and link functions"
+
+Without digressing much on ontologies, we may start with a basic analysis of common code with the question:
+
+> Who does what, to what?
+
+```
+Parent {
+    //Add constructor, funciton if you like
+    new Man().run()
+    new Car().start()
+}
+```
+Here we have a Man, running and a Car, starting. 
+- Man can decide to run. 
+- A car is started by someone else.
+- Both these were called within some parent class/location.
+
+This notation is thus flawed, as it isn't representing a clear picture of what is going on.
+
+```
+    controller {
+        victim.action()
+    }
+```
+
+> Promoting the 'dot'
+
+Here we promote the dot popularly placed between the victim and the action, to the controller.
+
+```
+    controller {
+        change {
+            victim.initalState()
+            victim.finalState()
+        }
+    }
+```
+
+Thus, here we have the well-known state machine. controller is changing states. Let's call the controller, `domain` from now on.
+
+
+> We say,
+
+`Within a domain, states change from one (inputs) to another (output)`
+
+Interestingly, this is like a typical function, which accepts input and produces outputs.
+
+> We may say,
+
+`domain(input) -> output`
+
+So far, this may be considered nothing novel, but as usual, the details are what is important. We will dweleve into it shortly.
