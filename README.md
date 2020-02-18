@@ -55,10 +55,11 @@ Interestingly, this is like a typical function, which accepts input and produces
 So far, this may be considered nothing novel, but as usual, the details are what is important. We will dweleve into it shortly.
 
 
-### Some things we will be discussion soon
+### Some things we will be discussing soon
 
 - A true abstraction is something you can forget about
-- Anything is defined by the input and output states, thus becoming its' identity
+- Anything (dimension) is defined by the input and output states, thus becoming its' identity
 - The more specific you get, the most abstract it becomes
 - The ability to repeat is true abstraction.
-- It is easier to repeat something than that which is abstract.
+- It is easier to repeat something specific than that which is abstract.
+- Data/Cells (Values) become Columns (Dimensions) as they exhibit input and output transforms. Thus anything is a dimension (Column). This challenges a relational representation of information.
