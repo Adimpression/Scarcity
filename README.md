@@ -53,3 +53,12 @@ Interestingly, this is like a typical function, which accepts input and produces
 `domain(input) -> output`
 
 So far, this may be considered nothing novel, but as usual, the details are what is important. We will dweleve into it shortly.
+
+
+### Some things we will be discussion soon
+
+- A true abstraction is something you can forget about
+- Anything is defined by the input and output states, thus becoming its' identity
+- The more specific you get, the most abstract it becomes
+- The ability to repeat is true abstraction.
+- It is easier to repeat something than that which is abstract.
