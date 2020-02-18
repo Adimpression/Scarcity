@@ -52,6 +52,8 @@ Interestingly, this is like a typical function, which accepts input and produces
 
 `domain(input) -> output`
 
+And we may call this whole representation a `dot`.
+
 So far, this may be considered nothing novel, but as usual, the details are what is important. We will dweleve into it shortly.
 
 
