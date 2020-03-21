@@ -13,6 +13,7 @@
         <module>generator</module>
     </modules>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
     <scm>
