@@ -1,4 +1,4 @@
-**Problem**: "I have knowledge, logic and functions scattered all over the place..."
+**Problem**: "I have knowledge, logic and functions scattered all over the world... How do I bring them together?"
 
 **Solution**: "Use a common notation to represent knowledge and logic. Use this notation to implement and link functions"
 
