@@ -68,7 +68,9 @@ final public class Main {
             futures = walk
                     .filter(path -> Files.isRegularFile(path) && !path.toString()
                             .contains(".git/") && !path.toString()
-                            .contains(".gitignore"))
+                            .contains(".gitignore") && !path.toString()
+                            .contains("Dockerfile") && !path.toString()
+                            .contains("cloudbuild.yaml"))
                     .map(Path::toString)
                     .map(x -> executorService.submit(() -> {
                         try {
