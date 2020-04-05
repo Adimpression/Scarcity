@@ -70,7 +70,9 @@ final public class Main {
                             .contains(".git/") && !path.toString()
                             .contains(".gitignore") && !path.toString()
                             .contains("Dockerfile") && !path.toString()
-                            .contains("cloudbuild.yaml"))
+                            .contains("cloudbuild.yaml") && !path.toString()
+                            .contains("known_hosts") && !path.toString()
+                            .contains("id_rsa.enc"))
                     .map(Path::toString)
                     .map(x -> executorService.submit(() -> {
                         try {
