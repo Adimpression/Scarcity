@@ -145,7 +145,8 @@
                 <version>2.0.143-SNAPSHOT</version>
                 <executions>
                     <execution>
-                        <!-- Change this to phase 'package' to enable, however, won't succeed with Google ArtiFactory-->
+                        <!-- Change this to phase 'package' to enable, however, won't succeed with Google ArtiFactory -->
+                        <!-- One more config in this file related to this -->
                         <phase>none</phase>
                         <goals>
                             <goal>run</goal>
@@ -195,7 +196,9 @@
                 <version>2.5.2</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <!-- Change this to phase 'package' to enable, however, won't succeed with Google ArtiFactory -->
+                        <!-- One more config in this file related to this -->
+                        <phase>none</phase>
                         <goals>
                             <goal>
                                 install-file
