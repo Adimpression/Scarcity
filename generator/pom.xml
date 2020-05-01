@@ -151,9 +151,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <pb>
-                        ${basedir}/target/generated-resources/protobuf/descriptor-sets/api_descriptor.pb
-                    </pb>
                     <csv>
                         ${basedir}/target/generated-resources/protobuf/layout.csv
                     </csv>
