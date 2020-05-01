@@ -140,32 +140,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>state</groupId>
-                <artifactId>helper</artifactId>
-                <version>2.0.143-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <!-- Change this to phase 'package' to enable, however, won't succeed with Google ArtiFactory -->
-                        <!-- One more config in this file related to this -->
-                        <phase>none</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <pb>
-                        ${basedir}/target/generated-resources/protobuf/descriptor-sets/api_descriptor.pb
-                    </pb>
-                    <csv>
-                        ${basedir}/target/generated-resources/protobuf/layout.csv
-                    </csv>
-                    <tsv>
-                        ${basedir}/target/generated-resources/protobuf/layout.tsv
-                    </tsv>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <executions>
@@ -189,32 +163,6 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>2.5.2</version>
-                <executions>
-                    <execution>
-                        <!-- Change this to phase 'package' to enable, however, won't succeed with Google ArtiFactory -->
-                        <!-- One more config in this file related to this -->
-                        <phase>none</phase>
-                        <goals>
-                            <goal>
-                                install-file
-                            </goal>
-                        </goals>
-                        <configuration>
-                            <groupId>state</groupId>
-                            <artifactId>helper</artifactId>
-                            <version>${pom.version}</version>
-                            <packaging>html</packaging>
-                            <file>
-                                ${basedir}/target/generated-resources/protobuf/layout.csv.html
-                            </file>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

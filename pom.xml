@@ -7,7 +7,6 @@
     <packaging>pom</packaging>
     <version>2.0.143-SNAPSHOT</version>
     <modules>
-        <module>helper</module>
         <module>compiler</module>
         <module>generator</module>
     </modules>
