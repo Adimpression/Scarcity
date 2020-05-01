@@ -144,13 +144,16 @@
                 <version>2.0.143-SNAPSHOT</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>none</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
+                    <pb>
+                        ${basedir}/target/generated-resources/protobuf/descriptor-sets/api_descriptor.pb
+                    </pb>
                     <csv>
                         ${basedir}/target/generated-resources/protobuf/layout.csv
                     </csv>
