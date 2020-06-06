@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,6 +31,60 @@ final public class Main {
     private static String source;
 
     private static String destination;
+    private static ANTLRErrorStrategy handler = new ANTLRErrorStrategy() {
+
+        @Override
+        public void reset(final Parser parser) {
+
+        }
+
+        @Override
+        public Token recoverInline(final Parser parser) throws RecognitionException {
+
+            final IntervalSet expectedTokens = parser.getExpectedTokens();
+            final StringBuilder stringBuffer = new StringBuilder();
+
+            for (int i = 0; i < expectedTokens.size(); i++) {
+                stringBuffer.append(expectedTokens)
+                        .append(",");
+            }
+
+            throw new RuntimeException(
+                    "\n[ERROR:STATE:COMPILER] Syntax error inside here:>>>" + parser.getTokenStream()
+                            .getText() + "<<< " +
+                            "\n[ERROR:STATE:COMPILER] Found:" + parser.getCurrentToken()
+                            .getText() + ". " +
+                            "\n[ERROR:STATE:COMPILER] Expected one of these:" + stringBuffer.toString());
+        }
+
+        @Override
+        public void recover(final Parser parser, final RecognitionException e) throws RecognitionException {
+
+            throw new RuntimeException(e);
+        }
+
+        @Override
+        public void sync(final Parser parser) throws RecognitionException {
+
+        }
+
+        @Override
+        public boolean inErrorRecoveryMode(final Parser parser) {
+
+            return false;
+        }
+
+        @Override
+        public void reportMatch(final Parser parser) {
+
+        }
+
+        @Override
+        public void reportError(final Parser parser, final RecognitionException e) {
+
+            throw new RuntimeException(e);
+        }
+    };
 
 
     public static void main(String[] args) throws IOException, TemplateException, InterruptedException {
@@ -102,7 +157,7 @@ final public class Main {
                 TimeUnit.MINUTES);
     }
 
-    private static void process(final Template template, final String fullFileName, final String basen) throws IOException, TemplateException {
+    private static void process(final Template template, final String fullFileName, final String outputBase) throws IOException, TemplateException {
 
         try {
             final int lastPeriod = fullFileName.lastIndexOf('.');
@@ -114,146 +169,142 @@ final public class Main {
 
             System.out.println("\t" + fullFileName.substring(lastSlash + 1) + "(FILE)");
 
-            //Created outline files may be misspelled. Detection here is invaluable.
-            if (!fullFileName.endsWith(".txt")) {
+
+            if (fullFileName.endsWith(".txt")) {
+
+                final ANTLRInputStream inputStream = new ANTLRFileStream(fullFileName,
+                        "UTF-8");
+                handle(inputStream,
+                        template,
+                        outputBase,
+                        fileNameWithoutExtension);
+
+            } else if (fullFileName.endsWith(".yaml")) {
+                final Map<String, InputStream> fileData = YamlParser.parse(
+                        fullFileName);
+                for (Map.Entry<String, InputStream> kv : fileData.entrySet()) {
+                    final ANTLRInputStream inputStream = new ANTLRInputStream(kv.getValue());
+                    handle(inputStream,
+                            template,
+                            outputBase,
+                            kv.getKey());
+                }
+            } else {
+                //Created outline files may be misspelled. Detection here is invaluable.
                 System.out.println("\n[WARNING:STATE:COMPILER] Only .txt files should be included. Noticed:" + fullFileName);
                 return;
             }
 
-            final Map<String, Object> templateData = new HashMap<>();
 
-            final ANTLRFileStream input = new ANTLRFileStream(fullFileName,
-                    "UTF-8");
-            final StateLexer stateLexer = new StateLexer(input);
-            final CommonTokenStream commonTokenStream = new CommonTokenStream(stateLexer);
-            final StateParser stateParser = new StateParser(commonTokenStream);
-
-            stateParser.setErrorHandler(new ANTLRErrorStrategy() {
-
-                @Override
-                public void reset(final Parser parser) {
-
-                }
-
-                @Override
-                public Token recoverInline(final Parser parser) throws RecognitionException {
-
-                    final IntervalSet expectedTokens = parser.getExpectedTokens();
-                    final StringBuilder stringBuffer = new StringBuilder();
-
-                    for (int i = 0; i < expectedTokens.size(); i++) {
-                        stringBuffer.append(expectedTokens)
-                                .append(",");
-                    }
-
-                    throw new RuntimeException(
-                            "\n[ERROR:STATE:COMPILER] Syntax error inside here:>>>" + parser.getTokenStream()
-                                    .getText() + "<<< " +
-                                    "\n[ERROR:STATE:COMPILER] Found:" + parser.getCurrentToken()
-                                    .getText() + ". " +
-                                    "\n[ERROR:STATE:COMPILER] Expected one of these:" + stringBuffer.toString());
-                }
-
-                @Override
-                public void recover(final Parser parser, final RecognitionException e) throws RecognitionException {
-
-                    throw new RuntimeException(e);
-                }
-
-                @Override
-                public void sync(final Parser parser) throws RecognitionException {
-
-                }
-
-                @Override
-                public boolean inErrorRecoveryMode(final Parser parser) {
-
-                    return false;
-                }
-
-                @Override
-                public void reportMatch(final Parser parser) {
-
-                }
-
-                @Override
-                public void reportError(final Parser parser, final RecognitionException e) {
-
-                    throw new RuntimeException(e);
-                }
-            });
-
-
-            final StateParser.MainContext mainContext = stateParser.main();
-            final StateParser.StateContext stateContext = mainContext.state();
-
-            final Set<String> v = new LinkedHashSet<>();
-            final Set<C> c = new LinkedHashSet<>();
-            final Set<C> cis = new LinkedHashSet<>();
-            final Set<SortedSet<C>> cor = new LinkedHashSet<>();
-            final Set<P> p = new LinkedHashSet<>();
-            final Set<P> pis = new LinkedHashSet<>();
-            final Set<SortedSet<P>> por = new LinkedHashSet<>();
-
-            //Leave, for debug, this approach helps
-            //if (fileNameWithoutExtension.contains("selection")) {
-            //  System.out.println("taken");
-            //}
-
-            new ParseTreeWalker().walk(new L(v,
-                            c,
-                            cis,
-                            cor,
-                            p,
-                            pis,
-                            por),
-                    mainContext);
-
-            templateData.put("filename",
-                    fileNameWithoutExtension);
-
-            templateData.put("state",
-                    stateContext.id()
-                            .getText()
-                            .replaceAll(" ",
-                                    "")
-                            .replaceFirst("Not",
-                                    "")
-                            .replaceFirst("Is",
-                                    ""));
-
-            templateData.put("imps",
-                    v);
-            templateData.put("cs",
-                    c);
-            templateData.put("cis",
-                    cis);
-            templateData.put("scors",
-                    cor);
-            templateData.put("ps",
-                    p);
-            templateData.put("pis",
-                    pis);
-            templateData.put("spors",
-                    por);
-
-            final File f = new File(basen + File.separator + fileNameWithoutExtension.replaceAll("\\.",
-                    "\\" + File.separator) + File.separator + "index.proto");
-            final File parent = f.getParentFile();
-            if (!parent.exists() && !parent.mkdirs()) {
-                throw new IllegalStateException("\n[ERROR:STATE:COMPILER]:Couldn't create dir: " + parent);
-            }
-
-            f.createNewFile();
-
-            final FileWriter out = new FileWriter(f);
-            template.process(templateData,
-                    out);
-            out.flush();
         } catch (final IOException e) {
             throw new IOException("\n[ERROR:STATE:COMPILER]:" + fullFileName,
                     e);
         }
+    }
+
+    private static void handle(final ANTLRInputStream input, final Template template, final String base, final String fileNameWithoutExtension) throws IOException, TemplateException {
+        final Set<String> v = new LinkedHashSet<>();
+        final Set<C> c = new LinkedHashSet<>();
+        final Set<C> cis = new LinkedHashSet<>();
+        final Set<SortedSet<C>> cor = new LinkedHashSet<>();
+        final Set<P> p = new LinkedHashSet<>();
+        final Set<P> pis = new LinkedHashSet<>();
+        final Set<SortedSet<P>> por = new LinkedHashSet<>();
+
+        final StateParser.StateContext stateContext = fill(input,
+                v,
+                c,
+                cis,
+                cor,
+                p,
+                pis,
+                por);
+
+        final String state = stateContext.id()
+                .getText()
+                .replaceAll(" ",
+                        "")
+                .replaceFirst("Not",
+                        "")
+                .replaceFirst("Is",
+                        "");
+
+        final Map<String, Object> templateData = prepareTemplateData(fileNameWithoutExtension,
+                v,
+                c,
+                cis,
+                cor,
+                p,
+                pis,
+                por,
+                state);
+
+        writeWithTemplate(template,
+                templateData,
+                base,
+                fileNameWithoutExtension);
+    }
+
+    private static Map<String, Object> prepareTemplateData(final String fileNameWithoutExtension, final Set<String> v, final Set<C> c, final Set<C> cis, final Set<SortedSet<C>> cor, final Set<P> p, final Set<P> pis, final Set<SortedSet<P>> por, final String state) {
+        final Map<String, Object> templateData = new HashMap<>();
+
+        templateData.put("filename",
+                fileNameWithoutExtension);
+        templateData.put("state",
+                state);
+        templateData.put("imps",
+                v);
+        templateData.put("cs",
+                c);
+        templateData.put("cis",
+                cis);
+        templateData.put("scors",
+                cor);
+        templateData.put("ps",
+                p);
+        templateData.put("pis",
+                pis);
+        templateData.put("spors",
+                por);
+        return templateData;
+    }
+
+    private static void writeWithTemplate(final Template template, final Map<String, Object> templateData, final String base, final String fileNameWithoutExtension) throws IOException, TemplateException {
+        final File f = new File(base + File.separator + fileNameWithoutExtension.replaceAll("\\.",
+                "\\" + File.separator) + File.separator + "index.proto");
+        final File parent = f.getParentFile();
+        if (!parent.exists() && !parent.mkdirs()) {
+            throw new IllegalStateException("\n[ERROR:STATE:COMPILER]:Couldn't create dir: " + parent);
+        }
+
+        f.createNewFile();
+
+        final FileWriter out = new FileWriter(f);
+        template.process(templateData,
+                out);
+        out.flush();
+    }
+
+    private static StateParser.StateContext fill(final ANTLRInputStream input, final Set<String> v, final Set<C> c, final Set<C> cis, final Set<SortedSet<C>> cor, final Set<P> p, final Set<P> pis, final Set<SortedSet<P>> por) {
+        final StateLexer stateLexer = new StateLexer(input);
+        final CommonTokenStream commonTokenStream = new CommonTokenStream(stateLexer);
+        final StateParser stateParser = new StateParser(commonTokenStream);
+
+        stateParser.setErrorHandler(handler);
+
+        final StateParser.MainContext mainContext = stateParser.main();
+        final StateParser.StateContext stateContext = mainContext.state();
+
+
+        new ParseTreeWalker().walk(new L(v,
+                        c,
+                        cis,
+                        cor,
+                        p,
+                        pis,
+                        por),
+                mainContext);
+        return stateContext;
     }
 
     private static boolean deleteDirectory(final File directoryToBeDeleted) {

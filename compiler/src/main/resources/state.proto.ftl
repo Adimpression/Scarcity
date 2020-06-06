@@ -21,7 +21,7 @@ message Is${state} {
     </#list>
     <#list spors as pors>
     <#list pors>
-    oneof <#list pors as t>${t.getName()}<#sep>_</#sep></#list>{
+    oneof <#list pors as t><#if t?index <= 10 >${t.getName()}<#sep>_</#sep></#if></#list><#if pors?size gte 11 >_and_more</#if>{
     <#items as por>
        .${por.getType()} ${por.getName()} = ${((pors?index  + '' + por?index)?number +  3000000)?long?c};
     </#items>
@@ -42,7 +42,7 @@ message Not${state} {
     </#list>
     <#list scors as cors>
     <#list cors>
-    oneof <#list cors as t>${t.getName()}<#sep>_</#sep></#list>{
+    oneof <#list cors as t><#if t?index <= 10 >${t.getName()}<#sep>_</#sep></#if></#list><#if cors?size gte 11 >_and_more</#if>{
     <#items as cor>
        .${cor.getType()} ${cor.getName()} = ${((cors?index  + '' + cor?index)?number +  3000000)?long?c};
     </#items>

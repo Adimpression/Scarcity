@@ -4,7 +4,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -255,43 +254,75 @@ public class L implements StateListener {
 
         final SortedSet<C> cs = new TreeSet<>();
 
-        ctx.bored().ed().forEach(edContext -> cs.add(new C(
-                index++,
-                edContext.getText()
-                        .replaceFirst("Is ", "Is")
-                        .replaceFirst("Not ", "Not")
-                        .replaceAll("Is", "NOT")
-                        .replaceAll("Not", "IS")
-                        .replaceAll("NOT", "Not")
-                        .replaceAll("IS", "Is").
-                        replace('/', '.'),
-                edContext.getText()
-                        .replaceFirst("Is ", "Is")
-                        .replaceFirst("Not ", "Not")
-                        .replaceAll("Is", "NOT")
-                        .replaceAll("Not", "IS")
-                        .replaceAll("NOT", "Not")
-                        .replaceAll("IS", "Is")
-                        .replaceAll("([a-z])([A-Z]+)", "$1_$2")
-                        .toLowerCase()
-                        .split("/")[1])));
+        index++;
+
+        ctx.bored()
+                .ed()
+                .forEach(edContext -> {
+                    final String text = edContext.getText();
+
+                    final String[] split = text.split("/");
+                    final String splitPath = split[0];
+                    final String spitName = split[1];
+
+                    final String pureTypeNegated = spitName
+                            .replaceFirst("Is ",
+                                    "Is")
+                            .replaceFirst("Not ",
+                                    "Not")
+                            .replaceFirst("Is",
+                                    "NOT")
+                            .replaceFirst("Not",
+                                    "IS")
+                            .replaceFirst("NOT",
+                                    "Not")
+                            .replaceFirst("IS",
+                                    "Is");
+
+                    final String fullTypeNegated = splitPath + "." + pureTypeNegated;
+
+                    final String pureFieldNegated = pureTypeNegated
+                            .replaceAll("([a-z])([A-Z]+)",
+                                    "$1_$2")
+                            .toLowerCase();
+
+                    cs.add(
+                            new C(index,
+                                    fullTypeNegated,
+                                    pureFieldNegated));
+                });
 
         cor.add(cs);
 
         final SortedSet<P> ps = new TreeSet<>();
 
-        ctx.bored().ed().forEach(edContext -> ps.add(new P(
-                index,
-                edContext.getText()
-                        .replaceFirst("Is ", "Is")
-                        .replaceFirst("Not ", "Not")
-                        .replace('/', '.'),
-                edContext.getText()
-                        .replaceFirst("Is ", "Is")
-                        .replaceFirst("Not ", "Not")
-                        .replaceAll("([a-z])([A-Z]+)", "$1_$2")
-                        .toLowerCase()
-                        .split("/")[1])));
+        ctx.bored()
+                .ed()
+                .forEach(edContext -> {
+                    final String text = edContext.getText();
+
+                    final String[] split = text.split("/");
+                    final String splitPath = split[0];
+                    final String spitName = split[1];
+
+                    final String pureType = spitName
+                            .replaceFirst("Is ",
+                                    "Is")
+                            .replaceFirst("Not ",
+                                    "Not");
+
+                    final String fullType = splitPath + "." + pureType;
+
+                    final String pureField = pureType
+                            .replaceAll("([a-z])([A-Z]+)",
+                                    "$1_$2")
+                            .toLowerCase();
+
+                    ps.add(new P(
+                            index,
+                            fullType,
+                            pureField));
+                });
 
         por.add(ps);
 
@@ -429,7 +460,9 @@ public class L implements StateListener {
 
     }
 
-
+    /**
+     * Created by Ravindranath Akila on 2019-09-20.
+     */
     static final public class ImportInjector {
 
         static void InjectImports(final Set<String> v, final StateParser.DredContext redContext) {
