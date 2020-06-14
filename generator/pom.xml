@@ -11,7 +11,7 @@
 
     <properties>
         <!-- Absolute path. Not windows compatible but can be made to, feel free. -->
-        <dimensions.source>/workspace/Dimensions</dimensions.source>
+        <dimensions.source>/Users/ravindranathakila/development/decided</dimensions.source>
 <!--        <dimensions.source>/Users/ravindranathakila/development/Dimensions</dimensions.source>-->
         <!-- Absolute path. Not windows compatible but can be made to, feel free. dimensions.destination should not be changed, at the moment. -->
         <dimensions.destination>${basedir}/src/main/proto</dimensions.destination>
@@ -144,7 +144,7 @@
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>generate-sources</phase>
+                        <phase>none</phase>
                         <goals>
                             <goal>add-source</goal>
                         </goals>
