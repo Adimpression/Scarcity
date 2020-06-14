@@ -11,8 +11,8 @@
 
     <properties>
         <!-- Absolute path. Not windows compatible but can be made to, feel free. -->
-<!--        <dimensions.source>/workspace/Dimensions</dimensions.source>-->
-        <dimensions.source>/Users/ravindranathakila/development/decided</dimensions.source>
+        <dimensions.source>/workspace/Dimensions</dimensions.source>
+<!--        <dimensions.source>/Users/ravindranathakila/development/decided</dimensions.source>-->
         <!-- Absolute path. Not windows compatible but can be made to, feel free. dimensions.destination should not be changed, at the moment. -->
         <dimensions.destination>${basedir}/src/main/proto</dimensions.destination>
     </properties>
