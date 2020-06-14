@@ -6,7 +6,7 @@
     <groupId>state</groupId>
     <artifactId>state</artifactId>
     <packaging>pom</packaging>
-    <version>2.0.151-SNAPSHOT</version>
+    <version>2.0.154-SNAPSHOT</version>
     <modules>
         <module>generator</module>
     </modules>
@@ -20,11 +20,6 @@
         <tag>HEAD</tag>
     </scm>
     <dependencies>
-        <dependency>
-            <groupId>state</groupId>
-            <artifactId>compiler</artifactId>
-            <version>3.0.3</version>
-        </dependency>
         <dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
@@ -43,7 +38,7 @@
             <extension>
                 <groupId>com.google.cloud.artifactregistry</groupId>
                 <artifactId>artifactregistry-maven-wagon</artifactId>
-                <version>2.0.0</version>
+                <version>2.1.0</version>
             </extension>
         </extensions>
     </build>
@@ -72,4 +67,17 @@
             </snapshots>
         </repository>
     </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <!-- tough-transport-214713 is Adimpression's project on GCP -->
+            <id>cloud-artifacts</id>
+            <url>artifactregistry://europe-maven.pkg.dev/tough-transport-214713/state</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

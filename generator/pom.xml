@@ -87,13 +87,6 @@
         </dependency>
     </dependencies>
     <build>
-        <extensions>
-            <extension>
-                <groupId>kr.motd.maven</groupId>
-                <artifactId>os-maven-plugin</artifactId>
-                <version>1.5.0.Final</version>
-            </extension>
-        </extensions>
         <plugins>
             <plugin>
                 <groupId>state</groupId>
@@ -166,17 +159,4 @@
             </plugin>
         </plugins>
     </build>
-    <repositories>
-        <repository>
-            <!-- tough-transport-214713 is Adimpression's project on GCP -->
-            <id>cloud-artifacts</id>
-            <url>artifactregistry://europe-maven.pkg.dev/tough-transport-214713/state</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>
